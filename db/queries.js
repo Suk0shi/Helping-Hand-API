@@ -6,7 +6,8 @@ async function getAllPins() {
 }
 
 async function insertPin(pin) {
-  await pool.query("INSERT INTO pins (pinName, lat, lng) VALUES ($1)", [pin]);
+  console.log("INSERT INTO pins (pinName, lat, lng) VALUES ($1, $2, $3)", [pin.name, pin.lat, pin.lng]);
+  await pool.query("INSERT INTO pins (pinName, lat, lng) VALUES ($1, $2, $3)", [pin.name, pin.lat, pin.lng]);
 }
 
 async function getSearchPins(pinName) {
