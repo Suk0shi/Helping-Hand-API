@@ -19,9 +19,16 @@ async function getDeletePin(pinName) {
   await pool.query("DELETE ($1) FROM pins", [pinName]);
 }
 
+// create pinContent table
+async function insertContent(content, id) {
+  console.log("INSERT INTO pinContent (pinName) VALUES ($1, $2, $3)", [id, content.text, content.photo, content.video]);
+  await pool.query("INSERT INTO pinContent (id, textContent, imgContent, videoContent) VALUES ($1, $2, $3, $4)", [id, content.text, content.photo, content.video]);
+}
+
 module.exports = {
   getAllPins,
   insertPin,
   getSearchPins,
-  getDeletePin
+  getDeletePin,
+  insertContent
 };
