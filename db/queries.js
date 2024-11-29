@@ -5,6 +5,11 @@ async function getAllPins() {
   return rows;
 }
 
+async function getPinName(id) {
+  const { rows } = await pool.query("SELECT pinName FROM pins WHERE id = ($1)", [id]);
+  return rows;
+}
+
 async function insertPin(pin) {
   console.log("INSERT INTO pins (pinName, lat, lng) VALUES ($1, $2, $3)", [pin.name, pin.lat, pin.lng]);
   await pool.query("INSERT INTO pins (pinName, lat, lng) VALUES ($1, $2, $3)", [pin.name, pin.lat, pin.lng]);
@@ -19,16 +24,22 @@ async function getDeletePin(pinName) {
   await pool.query("DELETE ($1) FROM pins", [pinName]);
 }
 
-// create pinContent table
+async function getAllContent(id) {
+  const { rows } = await pool.query("SELECT * FROM pincontent WHERE pin_id = ($1)", [id]);
+  return rows;
+}
+
 async function insertContent(content, id) {
-  console.log("INSERT INTO pinContent (pinName) VALUES ($1, $2, $3)", [id, content.text, content.photo, content.video]);
-  await pool.query("INSERT INTO pinContent (id, textContent, imgContent, videoContent) VALUES ($1, $2, $3, $4)", [id, content.text, content.photo, content.video]);
+  console.log("INSERT INTO pinContent (pin_id, textContent, imgContent, videoContent) VALUES ($1, $2, $3, $4)", [id, content.text, content.photo, content.video]);
+  await pool.query("INSERT INTO pinContent (pin_id, textContent, imgContent, videoContent) VALUES ($1, $2, $3, $4)", [id, content.text, content.photo, content.video]);
 }
 
 module.exports = {
   getAllPins,
+  getPinName,
   insertPin,
   getSearchPins,
   getDeletePin,
+  getAllContent,
   insertContent
 };

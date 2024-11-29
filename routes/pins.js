@@ -26,6 +26,8 @@ router.get("/delete", item_controller.item_delete_get);
 // POST request for creating Content.
 router.post("/:id", content_controller.content_create_post);
 
+// GET request for creating Content.
+router.get("/:id", content_controller.content_create_get);
 
 
 module.exports = router;

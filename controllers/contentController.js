@@ -3,6 +3,18 @@ const db = require("../db/queries");
 
 const asyncHandler = require("express-async-handler");
 
+exports.content_create_get = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const content = await db.getAllContent(id);
+  const pinName = await db.getPinName(id);
+
+  res.json({
+    title: "Content",
+    content: content,
+    pinName: pinName,
+  });
+});
+
 exports.content_create_post = asyncHandler(async (req, res, next) => {
     const { pinContent } = req.body;
     const { id } = req.params;
